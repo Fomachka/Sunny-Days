@@ -93,21 +93,21 @@ const ContentLibrary = () => {
   const GridView = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {filteredItems.map((item) => (
-        <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow group">
+        <div key={item.id} className="bg-[#ffffe7] rounded-xl shadow-xl border border-[#efccb6] shadow-2xl transition-shadow group">
           <div className="relative">
             {item.type === 'image' && (
-              <div className="relative h-48 bg-gray-100 rounded-t-xl overflow-hidden">
+              <div className="relative h-48 bg-[#efccb6] rounded-t-xl overflow-hidden">
                 <img 
                   src={item.url} 
                   alt={item.name}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity flex items-center justify-center">
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-2">
-                    <button className="p-2 bg-white rounded-full text-gray-700 hover:text-blue-600">
+                <div className="absolute inset-0 bg-[#ff5a08] bg-opacity-0 group-bg-opacity-20 transition-opacity flex items-center justify-center">
+                  <div className="opacity-0 group-opacity-100 transition-opacity flex items-center space-x-2">
+                    <button className="p-2 bg-white rounded-full text-[#ff5a08] text-[#fbaf00]">
                       <Download className="h-4 w-4" />
                     </button>
-                    <button className="p-2 bg-white rounded-full text-gray-700 hover:text-blue-600">
+                    <button className="p-2 bg-white rounded-full text-[#ff5a08] text-[#fbaf00]">
                       <Share2 className="h-4 w-4" />
                     </button>
                   </div>
@@ -116,33 +116,33 @@ const ContentLibrary = () => {
             )}
             
             {item.type === 'video' && (
-              <div className="relative h-48 bg-gray-100 rounded-t-xl overflow-hidden">
+              <div className="relative h-48 bg-[#efccb6] rounded-t-xl overflow-hidden">
                 <img 
                   src={item.url} 
                   alt={item.name}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                <div className="absolute inset-0 bg-[#ff5a08] bg-opacity-30 flex items-center justify-center">
                   <div className="w-12 h-12 bg-white bg-opacity-90 rounded-full flex items-center justify-center">
-                    <Play className="h-6 w-6 text-gray-700 ml-1" />
+                    <Play className="h-6 w-6 text-[#ff5a08] ml-1" />
                   </div>
                 </div>
-                <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
+                <div className="absolute bottom-2 right-2 bg-[#fbaf00] bg-opacity-90 text-white px-2 py-1 rounded text-xs">
                   {item.duration}
                 </div>
               </div>
             )}
             
             {item.type === 'document' && (
-              <div className="h-48 bg-gradient-to-br from-blue-50 to-purple-50 rounded-t-xl flex items-center justify-center">
-                <FileText className="h-16 w-16 text-gray-400" />
+              <div className="h-48 bg-gradient-to-br from-[#ffffe7] to-[#efccb6] rounded-t-xl flex items-center justify-center">
+                <FileText className="h-16 w-16 text-[#ff5a08]" />
               </div>
             )}
           </div>
           
           <div className="p-4">
-            <h3 className="font-medium text-gray-900 mb-2 truncate">{item.name}</h3>
-            <div className="space-y-1 text-sm text-gray-500">
+            <h3 className="font-medium text-[#ff5a08] mb-2 truncate">{item.name}</h3>
+            <div className="space-y-1 text-sm text-[#fbaf00]">
               <p>{item.format} • {item.size}</p>
               {item.dimensions && <p>{item.dimensions}</p>}
               <p>Uploaded {item.uploadDate}</p>
@@ -150,7 +150,7 @@ const ContentLibrary = () => {
             
             <div className="flex flex-wrap gap-1 mt-3">
               {item.tags.slice(0, 3).map((tag) => (
-                <span key={tag} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                <span key={tag} className="px-2 py-1 bg-[#fbaf00] text-white text-xs rounded-full">
                   {tag}
                 </span>
               ))}
@@ -172,7 +172,7 @@ const ContentLibrary = () => {
       </div>
       
       {filteredItems.map((item) => (
-        <div key={item.id} className="grid grid-cols-12 gap-4 p-4 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+        <div key={item.id} className="grid grid-cols-12 gap-4 p-4 border-b border-gray-200 bg-gray-50 transition-colors">
           <div className="col-span-4 flex items-center space-x-3">
             <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
               {item.type === 'image' && <Image className="h-5 w-5 text-gray-600" />}
@@ -196,13 +196,13 @@ const ContentLibrary = () => {
             {item.uploadDate}
           </div>
           <div className="col-span-2 flex items-center space-x-2">
-            <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors">
+            <button className="p-2 text-gray-400 text-blue-600 transition-colors">
               <Download className="h-4 w-4" />
             </button>
-            <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors">
+            <button className="p-2 text-gray-400 text-blue-600 transition-colors">
               <Share2 className="h-4 w-4" />
             </button>
-            <button className="p-2 text-gray-400 hover:text-red-600 transition-colors">
+            <button className="p-2 text-gray-400 text-red-600 transition-colors">
               <Trash2 className="h-4 w-4" />
             </button>
           </div>
@@ -219,7 +219,7 @@ const ContentLibrary = () => {
           <h2 className="text-2xl font-bold text-gray-900">Content Library</h2>
           <p className="text-gray-600">Organize and manage your marketing assets</p>
         </div>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center space-x-2">
+        <button className="bg-[#ff5a08] text-white px-4 py-2 rounded-lg font-medium bg-[#fbaf00] text-[#ff5a08] transition-colors flex items-center space-x-2">
           <Upload className="h-4 w-4" />
           <span>Upload Content</span>
         </button>
@@ -234,14 +234,14 @@ const ContentLibrary = () => {
             <input
               type="text"
               placeholder="Search content..."
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="pl-10 pr-4 py-2 border border-[#fbaf00] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff5a08] focus:border-transparent"
             />
           </div>
 
           {/* Filter */}
           <div className="flex items-center space-x-2">
             <Filter className="h-4 w-4 text-gray-400" />
-            <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+            <select className="border border-[#efccb6] rounded-lg px-3 py-2 text-sm">
               <option>All Tags</option>
               <option>Product</option>
               <option>Brand</option>
@@ -261,8 +261,8 @@ const ContentLibrary = () => {
                   onClick={() => setSelectedType(type.id)}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     selectedType === type.id
-                      ? 'bg-white text-gray-900 shadow-sm'
-                      : 'text-gray-500 hover:text-gray-700'
+                      ? 'bg-[#fbaf00] text-white shadow-sm'
+                      : 'text-[#ff5a08] text-[#fbaf00]'
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -277,7 +277,7 @@ const ContentLibrary = () => {
             <button
               onClick={() => setViewMode('grid')}
               className={`p-2 rounded-md transition-colors ${
-                viewMode === 'grid' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                viewMode === 'grid' ? 'bg-[#ff5a08] text-white shadow-sm' : 'text-[#ff5a08] text-[#fbaf00]'
               }`}
             >
               <Grid className="h-4 w-4" />
@@ -285,7 +285,7 @@ const ContentLibrary = () => {
             <button
               onClick={() => setViewMode('list')}
               className={`p-2 rounded-md transition-colors ${
-                viewMode === 'list' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                viewMode === 'list' ? 'bg-[#ff5a08] text-white shadow-sm' : 'text-[#ff5a08] text-[#fbaf00]'
               }`}
             >
               <List className="h-4 w-4" />

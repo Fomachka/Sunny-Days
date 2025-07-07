@@ -1,6 +1,108 @@
 import React, { useState } from 'react';
 import { Instagram, Facebook, Twitter, Linkedin, Play, Image, Hash, AtSign } from 'lucide-react';
 
+// Add types for templates and PostPreview
+
+type Template = {
+  id: number;
+  type: string;
+  title: string;
+  description: string;
+  engagement: string;
+  dimensions: string;
+  media?: File | null;
+};
+
+type TemplatesMap = {
+  [key: string]: Template[];
+};
+
+const templates: TemplatesMap = {
+  instagram: [
+    {
+      id: 1,
+      type: 'Story',
+      title: 'Product Showcase',
+      description: 'Highlight your latest products with style',
+      engagement: '4.2K views',
+      dimensions: '1080x1920',
+      media: null // Add media field
+    },
+    {
+      id: 2,
+      type: 'Post',
+      title: 'Behind the Scenes',
+      description: 'Share your company culture and process',
+      engagement: '2.8K likes',
+      dimensions: '1080x1080',
+      media: null
+    },
+    {
+      id: 3,
+      type: 'Reel',
+      title: 'Tutorial Video',
+      description: 'Educational content that drives engagement',
+      engagement: '12.5K views',
+      dimensions: '1080x1920',
+      media: null
+    }
+  ],
+  facebook: [
+    {
+      id: 1,
+      type: 'Post',
+      title: 'Event Promotion',
+      description: 'Drive attendance to your events',
+      engagement: '890 shares',
+      dimensions: '1200x630'
+    },
+    {
+      id: 2,
+      type: 'Cover',
+      title: 'Brand Header',
+      description: 'Professional cover image template',
+      engagement: '2.1K views',
+      dimensions: '820x312'
+    }
+  ],
+  twitter: [
+    {
+      id: 1,
+      type: 'Tweet',
+      title: 'Thread Template',
+      description: 'Multi-tweet educational content',
+      engagement: '456 retweets',
+      dimensions: 'Text-based'
+    },
+    {
+      id: 2,
+      type: 'Header',
+      title: 'Profile Banner',
+      description: 'Professional Twitter header',
+      engagement: '1.2K views',
+      dimensions: '1500x500'
+    }
+  ],
+  linkedin: [
+    {
+      id: 1,
+      type: 'Post',
+      title: 'Industry Insights',
+      description: 'Thought leadership content',
+      engagement: '234 comments',
+      dimensions: '1200x627'
+    },
+    {
+      id: 2,
+      type: 'Article',
+      title: 'Company Update',
+      description: 'Professional announcement template',
+      engagement: '567 views',
+      dimensions: '1200x627'
+    }
+  ]
+};
+
 const SocialMediaTemplates = () => {
   const [selectedPlatform, setSelectedPlatform] = useState('instagram');
 
@@ -11,91 +113,8 @@ const SocialMediaTemplates = () => {
     { id: 'linkedin', name: 'LinkedIn', icon: Linkedin, color: 'bg-blue-700' }
   ];
 
-  const templates = {
-    instagram: [
-      {
-        id: 1,
-        type: 'Story',
-        title: 'Product Showcase',
-        description: 'Highlight your latest products with style',
-        engagement: '4.2K views',
-        dimensions: '1080x1920'
-      },
-      {
-        id: 2,
-        type: 'Post',
-        title: 'Behind the Scenes',
-        description: 'Share your company culture and process',
-        engagement: '2.8K likes',
-        dimensions: '1080x1080'
-      },
-      {
-        id: 3,
-        type: 'Reel',
-        title: 'Tutorial Video',
-        description: 'Educational content that drives engagement',
-        engagement: '12.5K views',
-        dimensions: '1080x1920'
-      }
-    ],
-    facebook: [
-      {
-        id: 1,
-        type: 'Post',
-        title: 'Event Promotion',
-        description: 'Drive attendance to your events',
-        engagement: '890 shares',
-        dimensions: '1200x630'
-      },
-      {
-        id: 2,
-        type: 'Cover',
-        title: 'Brand Header',
-        description: 'Professional cover image template',
-        engagement: '2.1K views',
-        dimensions: '820x312'
-      }
-    ],
-    twitter: [
-      {
-        id: 1,
-        type: 'Tweet',
-        title: 'Thread Template',
-        description: 'Multi-tweet educational content',
-        engagement: '456 retweets',
-        dimensions: 'Text-based'
-      },
-      {
-        id: 2,
-        type: 'Header',
-        title: 'Profile Banner',
-        description: 'Professional Twitter header',
-        engagement: '1.2K views',
-        dimensions: '1500x500'
-      }
-    ],
-    linkedin: [
-      {
-        id: 1,
-        type: 'Post',
-        title: 'Industry Insights',
-        description: 'Thought leadership content',
-        engagement: '234 comments',
-        dimensions: '1200x627'
-      },
-      {
-        id: 2,
-        type: 'Article',
-        title: 'Company Update',
-        description: 'Professional announcement template',
-        engagement: '567 views',
-        dimensions: '1200x627'
-      }
-    ]
-  };
-
-  const PostPreview = ({ platform }) => {
-    const previews = {
+  const PostPreview = ({ platform }: { platform: string }) => {
+    const previews: { [key: string]: JSX.Element } = {
       instagram: (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 max-w-sm">
           {/* Instagram Header */}
@@ -197,10 +216,10 @@ const SocialMediaTemplates = () => {
           <p className="text-gray-600">Create engaging content for all platforms</p>
         </div>
         <div className="flex items-center space-x-4">
-          <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+          <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg bg-gray-200 transition-colors">
             Content Calendar
           </button>
-          <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+          <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg bg-blue-700 transition-colors">
             Create Post
           </button>
         </div>
@@ -217,7 +236,7 @@ const SocialMediaTemplates = () => {
               className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 selectedPlatform === platform.id
                   ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  : 'text-gray-500 text-gray-700'
               }`}
             >
               <Icon className="h-4 w-4" />
@@ -234,11 +253,11 @@ const SocialMediaTemplates = () => {
             {platforms.find(p => p.id === selectedPlatform)?.name} Templates
           </h3>
           
-          {templates[selectedPlatform]?.map((template) => (
-            <div key={template.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+          {templates[selectedPlatform]?.map((template: Template, idx: number) => (
+            <div key={template.id} className="bg-[#ffffe7] p-6 rounded-xl shadow-xl border border-[#efccb6] shadow-2xl transition-shadow group">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-3">
-                  <div className={`w-10 h-10 ${platforms.find(p => p.id === selectedPlatform)?.color} rounded-lg flex items-center justify-center`}>
+                  <div className={`w-10 h-10 ${selectedPlatform === 'instagram' ? 'bg-gradient-to-br from-[#ff5a08] to-[#fbaf00]' : platforms.find(p => p.id === selectedPlatform)?.color} rounded-lg flex items-center justify-center`}>
                     {template.type === 'Story' && <Image className="h-5 w-5 text-white" />}
                     {template.type === 'Post' && <Hash className="h-5 w-5 text-white" />}
                     {template.type === 'Reel' && <Play className="h-5 w-5 text-white" />}
@@ -248,7 +267,7 @@ const SocialMediaTemplates = () => {
                     {template.type === 'Article' && <Hash className="h-5 w-5 text-white" />}
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">{template.title}</h4>
+                    <h4 className="font-semibold text-gray-900 group-text-[#ff5a08] transition-colors duration-300">{template.title}</h4>
                     <p className="text-sm text-gray-500">{template.type}</p>
                   </div>
                 </div>
@@ -257,20 +276,29 @@ const SocialMediaTemplates = () => {
                   <p className="text-xs text-gray-500">{template.dimensions}</p>
                 </div>
               </div>
-              
               <p className="text-sm text-gray-600 mb-4">{template.description}</p>
-              
+              {/* Media Embed/Dropzone */}
+              {selectedPlatform === 'instagram' && (
+                <div className="mb-4">
+                  <label className="block text-xs font-medium text-[#ff5a08] mb-1">Media (Image/Video)</label>
+                  <div className="flex flex-col items-center justify-center border-2 border-dashed border-[#fbaf00] rounded-lg p-4 bg-[#efccb6] bg-opacity-30 bg-opacity-50 transition-colors duration-300 cursor-pointer">
+                    <span className="text-[#ff5a08] text-sm mb-2">Drag & drop or click to upload</span>
+                    <input type="file" accept="image/*,video/*" className="hidden" id={`media-upload-${idx}`} />
+                    <label htmlFor={`media-upload-${idx}`} className="cursor-pointer px-3 py-1 bg-[#fbaf00] text-white rounded-lg font-medium bg-[#ff5a08] transition-colors duration-300">Upload</label>
+                  </div>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
+                  <span className="px-2 py-1 bg-[#efccb6] text-[#ff5a08] text-xs rounded-full">
                     {template.dimensions}
                   </span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <button className="px-3 py-1 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                  <button className="px-3 py-1 text-sm font-medium text-[#ff5a08] bg-[#fbaf00] rounded-lg bg-[#ff5a08] text-white transition-colors duration-300">
                     Preview
                   </button>
-                  <button className="px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                  <button className="px-3 py-1 text-sm font-medium text-white bg-[#ff5a08] rounded-lg bg-[#fbaf00] text-[#ff5a08] transition-colors duration-300">
                     Use Template
                   </button>
                 </div>

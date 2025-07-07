@@ -43,10 +43,10 @@ const EmailTemplates = () => {
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900">Email Builder</h3>
           <div className="flex items-center space-x-2">
-            <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+            <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg bg-gray-200 transition-colors">
               Preview
             </button>
-            <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+            <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg bg-blue-700 transition-colors">
               Save Template
             </button>
           </div>
@@ -65,7 +65,7 @@ const EmailTemplates = () => {
                 { icon: Palette, label: 'Button' },
                 { icon: Mail, label: 'Social Links' }
               ].map((tool, index) => (
-                <div key={index} className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <div key={index} className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg bg-gray-50 cursor-pointer">
                   <tool.icon className="h-4 w-4 text-gray-600" />
                   <span className="text-sm font-medium text-gray-700">{tool.label}</span>
                 </div>
@@ -147,7 +147,7 @@ const EmailTemplates = () => {
                 </div>
 
                 <div className="text-center">
-                  <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                  <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium bg-blue-700 transition-colors">
                     Get Started
                   </button>
                 </div>
@@ -185,10 +185,10 @@ const EmailTemplates = () => {
           <p className="text-gray-600">Design and manage your email campaigns</p>
         </div>
         <div className="flex items-center space-x-4">
-          <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+          <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg bg-gray-200 transition-colors">
             Import Template
           </button>
-          <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+          <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg bg-blue-700 transition-colors">
             Create New
           </button>
         </div>
@@ -196,15 +196,15 @@ const EmailTemplates = () => {
 
       {/* Templates Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {templates.map((template) => (
-          <div key={template.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+        {templates.map((template, idx) => (
+          <div key={template.id} className="bg-[#ffffe7] p-6 rounded-xl shadow-xl border border-[#efccb6] shadow-2xl transition-shadow group">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Mail className="h-5 w-5 text-blue-600" />
+                <div className="w-10 h-10 bg-gradient-to-br from-[#ff5a08] to-[#fbaf00] rounded-lg flex items-center justify-center group-scale-110 transition-transform duration-300">
+                  <Mail className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">{template.name}</h3>
+                  <h3 className="font-semibold text-gray-900 group-text-[#ff5a08] transition-colors duration-300">{template.name}</h3>
                   <p className="text-sm text-gray-500">{template.type}</p>
                 </div>
               </div>
@@ -222,7 +222,15 @@ const EmailTemplates = () => {
                 <p className="text-sm font-medium text-gray-900">{template.subject}</p>
                 <p className="text-sm text-gray-500">{template.previewText}</p>
               </div>
-              
+              {/* Media Embed/Dropzone */}
+              <div className="mb-2">
+                <label className="block text-xs font-medium text-[#ff5a08] mb-1">Media (Image/Video)</label>
+                <div className="flex flex-col items-center justify-center border-2 border-dashed border-[#fbaf00] rounded-lg p-4 bg-[#efccb6] bg-opacity-30 bg-opacity-50 transition-colors duration-300 cursor-pointer">
+                  <span className="text-[#ff5a08] text-sm mb-2">Drag & drop or click to upload</span>
+                  <input type="file" accept="image/*,video/*" className="hidden" id={`email-media-upload-${idx}`} />
+                  <label htmlFor={`email-media-upload-${idx}`} className="cursor-pointer px-3 py-1 bg-[#fbaf00] text-white rounded-lg font-medium bg-[#ff5a08] transition-colors duration-300">Upload</label>
+                </div>
+              </div>
               <div className="flex items-center space-x-4 text-sm text-gray-500">
                 <div className="flex items-center space-x-1">
                   <Eye className="h-3 w-3" />
@@ -237,17 +245,17 @@ const EmailTemplates = () => {
 
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200">
               <div className="flex items-center space-x-2">
-                <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors">
+                <button className="p-2 text-[#ff5a08] text-[#fbaf00] transition-colors duration-300">
                   <Eye className="h-4 w-4" />
                 </button>
-                <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors">
+                <button className="p-2 text-[#ff5a08] text-[#fbaf00] transition-colors duration-300">
                   <Edit className="h-4 w-4" />
                 </button>
-                <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors">
+                <button className="p-2 text-[#ff5a08] text-[#fbaf00] transition-colors duration-300">
                   <Copy className="h-4 w-4" />
                 </button>
               </div>
-              <button className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+              <button className="text-sm font-medium text-white bg-[#ff5a08] rounded-lg px-4 py-2 bg-[#fbaf00] text-[#ff5a08] transition-colors duration-300">
                 Use Template
               </button>
             </div>

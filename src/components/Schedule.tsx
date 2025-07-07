@@ -60,7 +60,7 @@ const Schedule = () => {
             <button
               onClick={() => setView('week')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                view === 'week' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                view === 'week' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 text-gray-700'
               }`}
             >
               Week
@@ -68,13 +68,13 @@ const Schedule = () => {
             <button
               onClick={() => setView('month')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                view === 'month' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                view === 'month' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 text-gray-700'
               }`}
             >
               Month
             </button>
           </div>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center space-x-2">
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium bg-blue-700 transition-colors flex items-center space-x-2">
             <Plus className="h-4 w-4" />
             <span>Add Campaign</span>
           </button>
@@ -87,7 +87,7 @@ const Schedule = () => {
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900">June 2024</h3>
             <div className="flex items-center space-x-2">
-              <button className="p-2 hover:bg-gray-100 rounded-lg">
+              <button className="p-2 bg-gray-100 rounded-lg">
                 <Calendar className="h-5 w-5 text-gray-600" />
               </button>
             </div>
@@ -124,7 +124,7 @@ const Schedule = () => {
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Upcoming Campaigns</h3>
           <div className="space-y-4">
             {campaigns.map((campaign) => (
-              <div key={campaign.id} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+              <div key={campaign.id} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg bg-gray-50 transition-colors">
                 <div className={`w-4 h-4 rounded-full ${campaign.color}`}></div>
                 <div className="flex-1">
                   <h4 className="font-medium text-gray-900">{campaign.title}</h4>
@@ -144,10 +144,10 @@ const Schedule = () => {
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors">
+                  <button className="p-2 text-gray-400 text-blue-600 transition-colors">
                     <Edit className="h-4 w-4" />
                   </button>
-                  <button className="p-2 text-gray-400 hover:text-red-600 transition-colors">
+                  <button className="p-2 text-gray-400 text-red-600 transition-colors">
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </div>

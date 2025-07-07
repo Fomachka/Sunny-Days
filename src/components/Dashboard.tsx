@@ -55,7 +55,7 @@ const Dashboard = () => {
         {metrics.map((metric, index) => {
           const Icon = metric.icon;
           return (
-            <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+            <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className={`p-2 rounded-lg bg-gray-50`}>
@@ -138,8 +138,8 @@ const Dashboard = () => {
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">Recent Activity</h3>
+      <div className="bg-[#ffffe7] p-6 rounded-xl shadow-xl border border-[#efccb6]">
+        <h3 className="text-lg font-semibold text-[#ff5a08] mb-6">Recent Activity</h3>
         <div className="space-y-4">
           {[
             { action: 'Email campaign "Newsletter Q2" sent to 15,000 subscribers', time: '2 hours ago', type: 'email' },
@@ -147,10 +147,10 @@ const Dashboard = () => {
             { action: 'New lead captured from landing page', time: '6 hours ago', type: 'lead' },
             { action: 'Campaign budget increased by $2,000', time: '1 day ago', type: 'budget' }
           ].map((activity, index) => (
-            <div key={index} className="flex items-center space-x-4 p-4 border-l-4 border-blue-500 bg-blue-50">
+            <div key={index} className="flex items-center space-x-4 p-4 border-l-4 border-[#fbaf00] bg-[#efccb6]">
               <div className="flex-1">
-                <p className="text-sm text-gray-900">{activity.action}</p>
-                <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
+                <p className="text-sm text-[#ff5a08]">{activity.action}</p>
+                <p className="text-xs text-[#fbaf00] mt-1">{activity.time}</p>
               </div>
             </div>
           ))}
