@@ -1,25 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, Target, DollarSign, TrendingUp, Users, Mail, Instagram, Play, BarChart3, Eye, Zap, CheckCircle, ArrowRight, Star, Award, Lightbulb, Clock, Globe, Heart, Sparkles, Sun, Shield, Camera, MessageCircle, Share2, ThumbsUp, MousePointer, Upload, Image } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Calendar, Target, CircleDollarSign , TrendingUp, Users, Mail, Instagram, Play, BarChart3, Eye, Zap, CheckCircle, ArrowRight, Star, Award, Lightbulb, Clock, Globe, Heart, Sparkles, Sun, Shield, Camera, MessageCircle, Share2, ThumbsUp, MousePointer, Upload, Image } from 'lucide-react';
 import tubeImg from './assets/tube.png';
 
 function App() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [timelineProgress, setTimelineProgress] = useState(0);
   const [activeWeek, setActiveWeek] = useState<number | null>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const timelineSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-    interval = setInterval(() => {
-      setTimelineProgress(prev => {
-        if (prev >= 100) {
-          if (interval) clearInterval(interval);
-          return 100;
+    if (hasAnimated) return;
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          let progress = 0;
+          const interval = setInterval(() => {
+            progress += 1;
+            setTimelineProgress(progress);
+            if (progress >= 100) {
+              clearInterval(interval);
+            }
+          }, 20);
         }
-        return prev + 1;
-      });
-    }, 20); // Faster animation, adjust as needed
-    return () => { if (interval) clearInterval(interval); };
-  }, []);
+      },
+      { threshold: 0.3 }
+    );
+    if (timelineSectionRef.current) {
+      observer.observe(timelineSectionRef.current);
+    }
+    return () => {
+      if (timelineSectionRef.current) {
+        observer.unobserve(timelineSectionRef.current);
+      }
+    };
+  }, [hasAnimated]);
 
   const HoverCard = ({ children, hoverContent, className = "", index, position = "right", wide = false }: { children: React.ReactNode; hoverContent: React.ReactNode; index: number; position?: 'left' | 'center' | 'right'; wide?: boolean; className?: string }) => (
     <div 
@@ -155,7 +171,7 @@ function App() {
   ];
 
   const TimelineGraph = () => (
-    <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-2 sm:p-8 border border-gray-200 shadow-lg">
+    <div ref={timelineSectionRef} className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-2 sm:p-8 border border-gray-200 shadow-lg">
       <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Interactive Campaign Timeline</h3>
       
       {/* Timeline visualization */}
@@ -390,7 +406,7 @@ function App() {
               >
                 <div className="flex items-center space-x-3 cursor-pointer">
                   <div className="px-4 py-2 rounded-xl  bg-transparent group-bg-white group-bg-opacity-30 group-shadow-lg flex items-center space-x-3">
-                    <DollarSign className="h-6 w-6" />
+                    <CircleDollarSign  className="h-6 w-6" />
                     <span className="text-lg font-medium">₩3,000,000 Budget</span>
                   </div>
                 </div>
@@ -432,7 +448,7 @@ function App() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            <div className="flex flex-col justify-center h-full min-h-[340px] bg-white rounded-2xl shadow-lg p-8 items-center text-center">
+            <div className="flex flex-col justify-center h-full min-h-[340px] bg-white rounded-2xl shadow-lg p-8 items-center text-center transition-transform duration-300 hover:scale-103 hover:shadow-xl">
               {/* Product image */}
               <div className="flex justify-center mb-6">
                 <img
@@ -453,13 +469,13 @@ function App() {
               </p>
             </div>
             
-            <div className="flex flex-col justify-center h-full min-h-[340px] bg-gradient-to-br from-orange-100 to-yellow-100 p-8 rounded-2xl border-2 border-orange-200 border-orange-300 items-center text-center">
+            <div className="flex flex-col justify-center h-full min-h-[340px] bg-gradient-to-br from-orange-100 to-yellow-100 p-8 rounded-2xl border-2 border-orange-200 border-orange-300 items-center text-center transition-transform duration-300 hover:scale-103 hover:shadow-xl">
               <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-full flex items-center justify-center mx-auto mb-6 group-scale-110 transition-transform ">
+                <div className="w-16 h-16 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-full flex items-center justify-center mx-auto mb-6 ">
                   <Lightbulb className="h-8 w-8 text-white" />
                 </div>
                 <h4 className="font-bold text-gray-900 mb-3 text-xl">Unique Selling Proposition</h4>
-                <p className="text-[#ff5a08] font-bold text-2xl mb-4 group-scale-105 transition-transform ">
+                <p className="text-[#ff5a08] font-bold text-2xl mb-4  ">
                   "Invisible Protection. Naturally Radiant Skin."
                 </p>
                 <p className="text-gray-700 leading-relaxed">
@@ -472,22 +488,8 @@ function App() {
 
           {/* Four feature cards below product description */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-12">
-            <HoverCard
-              index={10}
-              wide={true}
-              hoverContent={
-                <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl">
-                  <div className="flex items-center space-x-3">
-                    <Sun className="h-6 w-6 text-yellow-500" />
-                    <span className="font-bold text-gray-900">Broad-spectrum SPF50+/PA++++</span>
-                  </div>
-                  <p className="text-gray-600 mt-2">
-                    Provides comprehensive protection against UVA and UVB rays, ensuring long-lasting sun protection.
-                  </p>
-                </div>
-              }
-            >
-              <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl">
+           
+              <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl transition-transform duration-300 hover:scale-103 hover:shadow-xl">
                 <div className="flex items-center space-x-3">
                   <Sun className="h-6 w-6 text-yellow-500" />
                   <span className="font-bold text-gray-900">Broad-spectrum SPF50+/PA++++</span>
@@ -496,24 +498,8 @@ function App() {
                   Provides comprehensive protection against UVA and UVB rays, ensuring long-lasting sun protection.
                 </p>
               </div>
-            </HoverCard>
 
-            <HoverCard
-              index={11}
-              wide={true}
-              hoverContent={
-                <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl">
-                  <div className="flex items-center space-x-3">
-                    <Heart className="h-6 w-6 text-red-500" />
-                    <span className="font-bold text-gray-900">Nourishing & Hydrating</span>
-                  </div>
-                  <p className="text-gray-600 mt-2">
-                    Enriched with nourishing ingredients like hyaluronic acid and ceramides to keep skin hydrated and protected.
-                  </p>
-                </div>
-              }
-            >
-              <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl">
+              <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl transition-transform duration-300 hover:scale-103 hover:shadow-xl">
                 <div className="flex items-center space-x-3">
                   <Heart className="h-6 w-6 text-red-500" />
                   <span className="font-bold text-gray-900">Nourishing & Hydrating</span>
@@ -522,24 +508,8 @@ function App() {
                   Enriched with nourishing ingredients like hyaluronic acid and ceramides to keep skin hydrated and protected.
                 </p>
               </div>
-            </HoverCard>
 
-            <HoverCard
-              index={12}
-              wide={true}
-              hoverContent={
-                <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl">
-                  <div className="flex items-center space-x-3">
-                    <Sparkles className="h-6 w-6 text-purple-500" />
-                    <span className="font-bold text-gray-900">Long-lasting Protection</span>
-                  </div>
-                  <p className="text-gray-600 mt-2">
-                    Offers a non-sticky, long-lasting finish that doesn't leave a white cast or feel heavy on the skin.
-                  </p>
-                </div>
-              }
-            >
-              <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl">
+              <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl transition-transform duration-300 hover:scale-103 hover:shadow-xl">
                 <div className="flex items-center space-x-3">
                   <Sparkles className="h-6 w-6 text-purple-500" />
                   <span className="font-bold text-gray-900">Long-lasting Protection</span>
@@ -548,24 +518,8 @@ function App() {
                   Offers a non-sticky, long-lasting finish that doesn't leave a white cast or feel heavy on the skin.
                 </p>
               </div>
-            </HoverCard>
 
-            <HoverCard
-              index={13}
-              wide={true}
-              hoverContent={
-                <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl">
-                  <div className="flex items-center space-x-3">
-                    <Shield className="h-6 w-6 text-blue-500" />
-                    <span className="font-bold text-gray-900">Safe for Sensitive Skin</span>
-                  </div>
-                  <p className="text-gray-600 mt-2">
-                    Formulated with gentle, hypoallergenic ingredients to be safe for even the most sensitive skin types.
-                  </p>
-                </div>
-              }
-            >
-              <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl">
+              <div className="p-8 text-lg min-h-[120px] w-full bg-gray-50 rounded-xl transition-transform duration-300 hover:scale-103 hover:shadow-xl">
                 <div className="flex items-center space-x-3">
                   <Shield className="h-6 w-6 text-blue-500" />
                   <span className="font-bold text-gray-900">Safe for Sensitive Skin</span>
@@ -574,7 +528,6 @@ function App() {
                   Formulated with gentle, hypoallergenic ingredients to be safe for even the most sensitive skin types.
                 </p>
               </div>
-            </HoverCard>
           </div>
         </section>
 
@@ -658,7 +611,7 @@ function App() {
                   </div>
                 }
               >
-                <div className="text-center p-8 bg-white rounded-2xl border border-gray-200 shadow-xl duration-500 cursor-pointer group scale-105">
+                <div className="text-center p-8 bg-white rounded-2xl border border-gray-200 shadow-xl cursor-pointer group transition-transform duration-300 hover:scale-103 hover:shadow-2xl">
                   <div className={`w-16 h-16 bg-gradient-to-r ${item.color} rounded-2xl flex items-center justify-center mx-auto mb-6 group-rotate-12 transition-transform `}>
                     <item.icon className="h-8 w-8 text-white" />
                   </div>
@@ -847,7 +800,7 @@ function App() {
                     </div>
                   }
                 >
-                  <div className="flex items-center justify-between p-6 bg-gray-50 rounded-xl bg-orange-50  cursor-pointer group scale-105">
+                  <div className="flex items-center justify-between p-6 bg-gray-50 rounded-xl bg-orange-50  cursor-pointer group transition-transform hover:scale-103 hover:shadow-xl">
                     <div className="flex items-center space-x-4">
                       <kpi.icon className={`h-6 w-6 ${kpi.color} group`} />
                       <span className="text-gray-900 font-medium">{kpi.metric}</span>
@@ -946,7 +899,7 @@ function App() {
                 </div>
               }
             >
-              <div className="mt-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border-2 border-green-200 border-green-300  cursor-pointer group">
+              <div className="mt-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border-2 border-green-200 border-green-300  cursor-pointer group transition-transform hover:scale-103 hover:shadow-xl">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-green-600 group-scale-110 transition-transform ">3x ROI</div>
                   <div className="text-gray-600 mt-2">₩3M spend → ₩9M revenue target</div>
@@ -995,7 +948,7 @@ function App() {
                       </div>
                     }
                   >
-                    <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border border-gray-200 border-orange-300 shadow-md  cursor-pointer group">
+                    <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border border-gray-200 border-orange-300 shadow-md  cursor-pointer group transition-transform hover:scale-103 hover:shadow-xl">
                       <item.icon className="h-6 w-6 text-orange-500 group" />
                       <div>
                         <span className="font-medium text-gray-900 group-text-orange-600 transition-colors ">
@@ -1022,7 +975,7 @@ function App() {
                     </div>
                   }
                 >
-                  <div className="p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl border-2 border-yellow-200 border-yellow-300  cursor-pointer group">
+                  <div className="p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl border-2 border-yellow-200 border-yellow-300  cursor-pointer group transition-transform hover:scale-103 hover:shadow-xl">
                     <span className="font-bold text-gray-900 group-text-orange-700 transition-colors ">
                       Primary: Sunshine Yellow (#FFE27A)
                     </span>
@@ -1039,7 +992,7 @@ function App() {
                     </div>
                   }
                 >
-                  <div className="p-4 bg-gradient-to-r from-orange-100 to-red-100 rounded-xl border-2 border-orange-200 border-orange-300  cursor-pointer group">
+                  <div className="p-4 bg-gradient-to-r from-orange-100 to-red-100 rounded-xl border-2 border-orange-200 border-orange-300  cursor-pointer group transition-transform hover:scale-103 hover:shadow-xl">
                     <span className="font-bold text-gray-900 group-text-red-700 transition-colors ">
                       Accent: Coral Peach (#FFB199)
                     </span>
@@ -1056,7 +1009,7 @@ function App() {
                     </div>
                   }
                 >
-                  <div className="p-4 bg-gray-50 rounded-xl border-2 border-gray-200 border-gray-300  cursor-pointer group">
+                  <div className="p-4 bg-gray-50 rounded-xl border-2 border-gray-200 border-gray-300  cursor-pointer group transition-transform hover:scale-103 hover:shadow-xl">
                     <span className="text-gray-900 group-text-gray-700 transition-colors ">
                       Summer tones, airy layout, soft gradients, bold CTAs
                     </span>
