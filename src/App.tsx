@@ -1,6 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, Target, CircleDollarSign , TrendingUp, Users, Mail, Instagram, Play, BarChart3, Eye, Zap, CheckCircle, ArrowRight, Star, Award, Lightbulb, Clock, Globe, Heart, Sparkles, Sun, Shield, Camera, MessageCircle, Share2, ThumbsUp, MousePointer, Upload, Image } from 'lucide-react';
 import tubeImg from './assets/tube.png';
+import emailImg from './assets/email.png';
+import emailTipsImg from './assets/emailTips.png';
+import preOrderImg from './assets/preorder.png';
+import carousel from './assets/carousel.png'
+import UVDemo from './assets/videos/UVDemo.mp4'
+import Educational from './assets/videos/Educational.mp4'
+import Challenge from './assets/videos/Challenge.mp4'
+import Teaser from './assets/videos/Teaser.mp4'
+import Reels from './assets/videos/Reels.mp4'
 
 function App() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -276,11 +285,17 @@ function App() {
     icon: Icon,
     color,
     bgColor,
+    mediaType = 'video',
+    mediaSrc = 'https://www.w3schools.com/html/mov_bbb.mp4',
+    imageAlt = 'Example Post Image',
   }: {
     platform: string;
     icon: React.ElementType;
     color: string;
     bgColor: string;
+    mediaType?: 'video' | 'image';
+    mediaSrc?: string;
+    imageAlt?: string;
   }) => {
     const [open, setOpen] = React.useState(false);
 
@@ -290,7 +305,7 @@ function App() {
           onClick={() => setOpen(o => !o)}
           className="mb-4 w-full bg-gray-200 text-gray-800 rounded-md py-2 font-semibold shadow-sm hover:bg-gray-300 hover:text-gray-900 transition"
         >
-          {open ? 'Hide Example Video' : 'Show Example Video'}
+          {open ? 'Hide Example' : 'Show Example'}
         </button>
         {open && (
           <>
@@ -300,12 +315,21 @@ function App() {
             </div>
             <div className="border-2 border-dashed border-orange-300 rounded-lg p-0">
               <div className="p-2">
-                <video
-                  src="https://www.w3schools.com/html/mov_bbb.mp4"
-                  controls
-                  className="w-full rounded-lg h-full"
-                  style={{ maxHeight: 320 }}
-                />
+                {mediaType === 'video' ? (
+                  <video
+                    src={mediaSrc}
+                    controls
+                    className="w-full rounded-lg h-full"
+                    style={{ maxHeight: 320 }}
+                  />
+                ) : (
+                  <img
+                    src={mediaSrc}
+                    alt={imageAlt}
+                    className="w-full rounded-lg h-full object-contain"
+                    style={{ maxHeight: 320 }}
+                  />
+                )}
               </div>
             </div>
           </>
@@ -330,7 +354,7 @@ function App() {
           <div className="absolute top-1/2 right-1/3 w-8 h-8 bg-white opacity-10 rounded-full" style={{ animationDelay: '0.7s' }}></div>
         </div>
         
-        <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-6 py-8 sm:py-20">
+        <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-6 py-8 sm:py-20 ">
           <div className="text-center text-white ">
             <HoverCard
               index={0}
@@ -348,13 +372,12 @@ function App() {
                 </div>
               }
             >
-              <div className=" inline-flex items-center space-x-2 bg-white bg-opacity-20 backdrop-blur-sm rounded-full px-8 py-4 text-sm font-medium mb-8 bg-opacity-30 cursor-pointer group">
+              <div className="inline-flex items-center space-x-2 bg-white bg-opacity-20 backdrop-blur-sm rounded-full px-8 py-4 text-sm font-medium mb-8 bg-opacity-30 cursor-pointer group transition-transform duration-300 hover:scale-103 hover:shadow-sm">
                 <Zap className="h-5 w-5 group" />
                 <span>Summer Campaign 2025</span>
                 <Star className="h-5 w-5 text-yellow-200 " />
-        
               </div>
-              </HoverCard>
+            </HoverCard>
 
             
             <h1 className="text-7xl font-bold mb-6 bg-gradient-to-r from-white to-yellow-100 bg-clip-text text-transparent">
@@ -648,19 +671,26 @@ function App() {
                     type: "Carousel Posts",
                     description: "UV cream intro, SPF benefits, testimonials, shop CTA",
                     metrics: "Expected reach: 100K+, Engagement rate: 8%+",
-                    details: "4-slide educational carousels with strong visual hierarchy and clear CTAs. Each slide focuses on a specific benefit with compelling visuals and social proof."
+                    details: "4-slide educational carousels with strong visual hierarchy and clear CTAs. Each slide focuses on a specific benefit with compelling visuals and social proof.",
+                    link: carousel,
+                    format: "image",
+                    alt: "all carousel posts shown side by side"
                   },
                   {
                     type: "Stories",
                     description: "Countdown teasers, polls, behind-the-scenes, UGC reposts",
                     metrics: "Story completion rate: 70%+, Swipe-ups: 2K+",
-                    details: "Interactive content with polls, questions, and countdown stickers. Behind-the-scenes content builds authenticity and trust with audience."
+                    details: "Interactive content with polls, questions, and countdown stickers. Behind-the-scenes content builds authenticity and trust with audience.",
+                    link: Teaser,
+                    format: "video"
                   },
                   {
                     type: "Reels",
                     description: "UV camera comparison, GRWM routines, challenge content",
                     metrics: "Video completion rate: 65%+, Shares: 500+",
-                    details: "Trending audio with educational and entertaining content. UV camera reveals show dramatic before/after protection results."
+                    details: "Trending audio with educational and entertaining content. UV camera reveals show dramatic before/after protection results.",
+                    link: Reels,
+                    format: "video"
                   }
                 ]
               },
@@ -674,19 +704,25 @@ function App() {
                     type: "UV Camera Demo",
                     description: "Before/after protection using trending audio",
                     metrics: "Video views: 200K+, Completion rate: 70%+",
-                    details: "Satisfying reveal content with educational value. Shows invisible sunscreen protection becoming visible under UV camera for dramatic effect."
+                    details: "Satisfying reveal content with educational value. Shows invisible sunscreen protection becoming visible under UV camera for dramatic effect.",
+                    link: UVDemo,
+                    format: "video"
                   },
                   {
                     type: "Educational Content",
                     description: "Sunscreen myths, POV content, how-to tutorials",
                     metrics: "Engagement rate: 12%+, Saves: 1K+",
-                    details: "Expert-led content debunking common sunscreen myths. POV videos showing daily application routine and makeup compatibility."
+                    details: "Expert-led content debunking common sunscreen myths. POV videos showing daily application routine and makeup compatibility.",
+                    link: Educational,
+                    format: "video"
                   },
                   {
                     type: "#SunnyDaysChallenge",
                     description: "User-generated summer radiant transformations",
                     metrics: "Challenge participation: 1K+, Hashtag reach: 2M+",
-                    details: "Branded hashtag challenge with prizes and influencer participation. Users show their summer radiant transformation using the product."
+                    details: "Branded hashtag challenge with prizes and influencer participation. Users show their summer radiant transformation using the product.",
+                    link: Challenge,
+                    format: "video"
                   }
                 ]
               },
@@ -700,19 +736,28 @@ function App() {
                     type: "Pre-Order (Jul 13)",
                     description: "Be the First to Protect – Exclusive Early Access!",
                     metrics: "Open rate: 28%+, CTR: 8%+",
-                    details: "Exclusive preview with early bird discount for subscribers. Creates FOMO and rewards loyal email subscribers with first access."
+                    details: "Exclusive preview with early bird discount for subscribers. Creates FOMO and rewards loyal email subscribers with first access.",
+                    link: preOrderImg,
+                    format: "image",
+                    alt: 'pre-order information for a sunscreen' 
                   },
                   {
                     type: "Launch (Jul 18)",
                     description: "Protect With Confidence – Now Available! Check out the store!",
                     metrics: "Open rate: 25%+, Conversion rate: 12%+",
-                    details: "Product launch announcement with social proof and reviews. Features customer testimonials and limited-time launch offer."
+                    details: "Product launch announcement with social proof and reviews. Features customer testimonials and limited-time launch offer.",
+                    link: emailImg,
+                    format: 'image',
+                    alt: 'sunscreen sale and purchase information' 
                   },
                   {
                     type: "Tips (Aug 1)",
                     description: "3 simple skincare rules for sunny days. Must know tips!",
                     metrics: "Open rate: 22%+, Blog traffic: 5K+",
-                    details: "Educational content driving traffic to blog and building authority. Provides value while subtly promoting product benefits."
+                    details: "Educational content driving traffic to blog and building authority. Provides value while subtly promoting product benefits.",
+                    link: emailTipsImg,
+                    format: "image",
+                    alt: 'skincare tips for applying sunscreen' 
                   }
                 ]
               }
@@ -740,14 +785,16 @@ function App() {
                           icon={channel.icon}
                           color={channel.color}
                           bgColor={channel.bgColor}
+                          mediaType={item.format}
+                          mediaSrc={item.link}
+                          imageAlt={item.alt}
                         />
                       </div>
                     );
                   })}
                 </div>
 
-                {/* Example Post Section */}
-                {/* This section is now moved inside the dropdown */}
+       
               </div>
             ))}
           </div>
