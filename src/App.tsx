@@ -285,7 +285,7 @@ function App() {
     icon: Icon,
     color,
     bgColor,
-    mediaType = 'video',
+    mediaType = "video",
     mediaSrc = 'https://www.w3schools.com/html/mov_bbb.mp4',
     imageAlt = 'Example Post Image',
   }: {
@@ -293,7 +293,7 @@ function App() {
     icon: React.ElementType;
     color: string;
     bgColor: string;
-    mediaType?: 'video' | 'image';
+    mediaType?: "video" | "image";
     mediaSrc?: string;
     imageAlt?: string;
   }) => {
@@ -315,7 +315,7 @@ function App() {
             </div>
             <div className="border-2 border-dashed border-orange-300 rounded-lg p-0">
               <div className="p-2">
-                {mediaType === 'video' ? (
+                {mediaType === "video" ? (
                   <video
                     src={mediaSrc}
                     controls
@@ -747,7 +747,7 @@ function App() {
                     metrics: "Open rate: 25%+, Conversion rate: 12%+",
                     details: "Product launch announcement with social proof and reviews. Features customer testimonials and limited-time launch offer.",
                     link: emailImg,
-                    format: 'image',
+                    format: "image",
                     alt: 'sunscreen sale and purchase information' 
                   },
                   {
